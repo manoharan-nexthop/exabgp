@@ -20,6 +20,7 @@ Supported NLRI Families:
 | BGPLS            | 16388    | 71   | RFC 7752 (Link-State)            |
 | MUP              | 1, 2     | 69   | draft-mpmz-bess-mup-safi         |
 | MVPN             | 1, 2     | 5    | RFC 6514 (Multicast VPN)         |
+| SRPolicy         | 1, 2     | 73   | RFC 9830 (SR Policy)             |
 +------------------+----------+------+----------------------------------+
 
 AFI Values: 1=IPv4, 2=IPv6, 25=L2VPN, 16388=BGP-LS
@@ -51,6 +52,7 @@ from exabgp.bgp.message.update.nlri.rtc import RTC
 from exabgp.bgp.message.update.nlri.bgpls import BGPLS
 from exabgp.bgp.message.update.nlri.mup import MUP
 from exabgp.bgp.message.update.nlri.mvpn import MVPN
+from exabgp.bgp.message.update.nlri.sr_policy import SRPolicyNLRI
 from exabgp.bgp.message.update.nlri.empty import Empty
 from exabgp.bgp.message.update.nlri.collection import NLRICollection, MPNLRICollection
 
@@ -67,6 +69,7 @@ __all__ = [
     'BGPLS',
     'MUP',
     'MVPN',
+    'SRPolicyNLRI',
     'Empty',
     'NLRICollection',
     'MPNLRICollection',

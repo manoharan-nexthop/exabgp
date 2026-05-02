@@ -30,6 +30,7 @@ from exabgp.configuration.announce.mvpn import AnnounceMVPN  # noqa: F401,E261,E
 from exabgp.configuration.announce.path import AnnouncePath  # noqa: F401,E261,E501
 from exabgp.configuration.announce.vpls import AnnounceVPLS  # noqa: F401,E261,E501
 from exabgp.configuration.announce.vpn import AnnounceVPN  # noqa: F401,E261,E501
+from exabgp.configuration.announce.sr_policy import sr_policy_ipv4, sr_policy_ipv6  # noqa: F401,E261,E501
 from exabgp.configuration.capability import ParseCapability
 from exabgp.configuration.core import Error, Parser, Scope, Section, Tokeniser
 from exabgp.configuration.tcpao import ParseTCPAO
@@ -408,6 +409,7 @@ class Configuration(_Configuration):
                 'flow',
                 'flow-vpn',
                 'mup',
+                'sr-policy',
             ],
             'ipv6': [
                 'unicast',
@@ -419,6 +421,7 @@ class Configuration(_Configuration):
                 'flow',
                 'flow-vpn',
                 'mup',
+                'sr-policy',
             ],
             'l2vpn': ['vpls'],
             'static': ['route', 'attributes'],

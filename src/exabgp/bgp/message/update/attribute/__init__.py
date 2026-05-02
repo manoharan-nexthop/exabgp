@@ -33,6 +33,7 @@ Attribute Types:
 | 15   | MP_UNREACH_NLRI    | Optional Non-Tr.  | MPURNLRI         |
 | 16   | EXTENDED_COMMUNITY | Optional Trans.   | ExtendedCommunities |
 | 22   | PMSI_TUNNEL        | Optional Trans.   | PMSI             |
+| 23   | TUNNEL_ENCAP       | Optional Trans.   | TunnelEncap      |
 | 26   | AIGP               | Optional Non-Tr.  | AIGP             |
 | 29   | BGP-LS             | Optional Non-Tr.  | LinkState        |
 | 32   | LARGE_COMMUNITY    | Optional Trans.   | LargeCommunities |
@@ -81,6 +82,7 @@ from exabgp.bgp.message.update.attribute.mprnlri import EMPTY_MPRNLRI
 from exabgp.bgp.message.update.attribute.mpurnlri import MPURNLRI
 from exabgp.bgp.message.update.attribute.mpurnlri import EMPTY_MPURNLRI
 from exabgp.bgp.message.update.attribute.pmsi import PMSI
+from exabgp.bgp.message.update.attribute.tunnel_encap import TunnelEncap
 from exabgp.bgp.message.update.attribute.aigp import AIGP
 from exabgp.bgp.message.update.attribute.bgpls.linkstate import LinkState
 from exabgp.bgp.message.update.attribute.sr.prefixsid import PrefixSid
@@ -118,6 +120,7 @@ __all__ = [
     'MPURNLRI',
     'EMPTY_MPURNLRI',
     'PMSI',
+    'TunnelEncap',
     'AIGP',
     'LinkState',
     'PrefixSid',

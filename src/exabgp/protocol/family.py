@@ -106,9 +106,20 @@ class AFI(int):
                 'flow',
                 'flow-vpn',
                 'mup',
+                'sr-policy',
             ]
         if afi == 'ipv6':
-            return ['unicast', 'nlri-mpls', 'labeled-unicast', 'mpls-vpn', 'mcast-vpn', 'flow', 'flow-vpn', 'mup']
+            return [
+                'unicast',
+                'nlri-mpls',
+                'labeled-unicast',
+                'mpls-vpn',
+                'mcast-vpn',
+                'flow',
+                'flow-vpn',
+                'mup',
+                'sr-policy',
+            ]
         if afi == 'l2vpn':
             return ['vpls', 'evpn']
         if afi == 'bgp-ls':
@@ -169,6 +180,7 @@ class SAFI(int):
     BGPLS: ClassVar[int] = 71  # [RFC7752]
     BGPLS_VPN: ClassVar[int] = 72  # [RFC7752]
     MUP: ClassVar[int] = 85  # [draft-mpmz-bess-mup-safi]
+    SR_POLICY: ClassVar[int] = 73  # [RFC9830]
     MPLS_VPN: ClassVar[int] = 128  # [RFC4364]
     RTC: ClassVar[int] = 132  # [RFC4684]
     FLOW_IP: ClassVar[int] = 133  # [RFC5575]
@@ -199,6 +211,7 @@ class SAFI(int):
     bgp_ls: ClassVar[SAFI]
     bgp_ls_vpn: ClassVar[SAFI]
     mup: ClassVar[SAFI]
+    sr_policy: ClassVar[SAFI]
     mpls_vpn: ClassVar[SAFI]
     mcast_vpn: ClassVar[SAFI]
     rtc: ClassVar[SAFI]
@@ -216,6 +229,7 @@ class SAFI(int):
         70: 'evpn',
         71: 'bgp-ls',
         72: 'bgp-ls-vpn',
+        73: 'sr-policy',
         85: 'mup',
         128: 'mpls-vpn',
         132: 'rtc',
@@ -278,6 +292,7 @@ SAFI.evpn = SAFI.from_int(SAFI.EVPN)
 SAFI.bgp_ls = SAFI.from_int(SAFI.BGPLS)
 SAFI.bgp_ls_vpn = SAFI.from_int(SAFI.BGPLS_VPN)
 SAFI.mup = SAFI.from_int(SAFI.MUP)
+SAFI.sr_policy = SAFI.from_int(SAFI.SR_POLICY)
 SAFI.mpls_vpn = SAFI.from_int(SAFI.MPLS_VPN)
 SAFI.mcast_vpn = SAFI.from_int(SAFI.MCAST_VPN)
 SAFI.rtc = SAFI.from_int(SAFI.RTC)
@@ -294,6 +309,7 @@ SAFI.common = {
     SAFI.bgp_ls.pack_safi(): SAFI.bgp_ls,
     SAFI.bgp_ls_vpn.pack_safi(): SAFI.bgp_ls_vpn,
     SAFI.mup.pack_safi(): SAFI.mup,
+    SAFI.sr_policy.pack_safi(): SAFI.sr_policy,
     SAFI.mpls_vpn.pack_safi(): SAFI.mpls_vpn,
     SAFI.mcast_vpn.pack_safi(): SAFI.mcast_vpn,
     SAFI.rtc.pack_safi(): SAFI.rtc,
@@ -313,6 +329,7 @@ SAFI.codes = dict(
         'bgp-ls': SAFI.bgp_ls,
         'bgp-ls-vpn': SAFI.bgp_ls_vpn,
         'mup': SAFI.mup,
+        'sr-policy': SAFI.sr_policy,
         'mpls-vpn': SAFI.mpls_vpn,
         'mcast-vpn': SAFI.mcast_vpn,
         'rtc': SAFI.rtc,
@@ -347,6 +364,8 @@ class Family:
         (AFI.ipv4, SAFI.flow_ip): ((0, 4), 0),
         (AFI.ipv4, SAFI.flow_vpn): ((0, 4), 0),
         (AFI.ipv4, SAFI.rtc): ((4, 16), 0),
+        (AFI.ipv4, SAFI.sr_policy): ((4,), 0),
+        (AFI.ipv6, SAFI.sr_policy): ((16,), 0),
         (AFI.ipv6, SAFI.unicast): ((16, 32), 0),
         (AFI.ipv6, SAFI.nlri_mpls): ((16, 32), 0),
         (AFI.ipv6, SAFI.mup): ((4, 16), 0),

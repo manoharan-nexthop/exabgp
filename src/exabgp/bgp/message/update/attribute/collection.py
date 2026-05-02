@@ -109,6 +109,7 @@ class AttributeCollection(MutableMapping[int, Attribute]):
         Attribute.CODE.INTERNAL_NAME: ('string', '', 'name', '%s', '%s'),
         Attribute.CODE.INTERNAL_DISCARD: ('string', '', 'error', '%s', '%s'),
         Attribute.CODE.INTERNAL_TREAT_AS_WITHDRAW: ('string', '', 'error', '%s', '%s'),
+        Attribute.CODE.TUNNEL_ENCAP: ('list', '', 'tunnel-encap', '%s', '%s'),
     }
 
     _str: str

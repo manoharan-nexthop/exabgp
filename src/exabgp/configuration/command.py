@@ -444,6 +444,66 @@ def format_mup_announce(
     return ' '.join(cmd_parts)
 
 
+def format_sr_policy_announce(
+    afi: str,
+    nexthop: str,
+    nlri_info: dict[str, Any],
+    attributes: dict[str, Any],
+    action: str = 'announce',
+) -> str | None:
+    distinguisher = nlri_info.get('distinguisher', 0)
+    color = nlri_info.get('color', 0)
+    endpoint = nlri_info.get('endpoint', '')
+
+    sr_policy = attributes.get('tunnel-encap', {}).get('sr-policy', {})
+    if not sr_policy:
+        return None
+
+    preference = sr_policy.get('preference', 0)
+    cmd_parts = [
+        f'{action} {afi} sr-policy distinguisher {distinguisher} color {color} endpoint {endpoint} next-hop {nexthop} preference {preference}'
+    ]
+
+    if 'binding-sid' in sr_policy:
+        bsid = sr_policy['binding-sid']
+        bsid_type = bsid.get('type', 'mpls')
+        label = bsid.get('label', 0)
+        cmd_parts.append(f'binding-sid {bsid_type} {label}')
+
+    if 'srv6-binding-sid' in sr_policy:
+        cmd_parts.append(f'srv6-binding-sid {sr_policy["srv6-binding-sid"]}')
+
+    for sl in sr_policy.get('segment-lists', []):
+        weight = sl.get('weight', 1)
+        seg_parts = [f'segment-list weight {weight}']
+        for seg in sl.get('segments', []):
+            seg_type = seg.get('type', '')
+            if seg_type == 'A':
+                label = seg.get('label', 0)
+                seg_parts.append(f'segment type-a mpls {label}')
+            elif seg_type == 'B':
+                sid = seg.get('sid', '')
+                if 'endpoint-behavior' in seg:
+                    eb = seg['endpoint-behavior']
+                    behavior = eb.get('behavior', 0)
+                    lb = eb.get('lb-length', 0)
+                    ln = eb.get('ln-length', 0)
+                    fn = eb.get('fun-length', 0)
+                    al = eb.get('arg-length', 0)
+                    seg_parts.append(f'segment type-b srv6 {sid} endpoint-behavior {behavior} {lb} {ln} {fn} {al}')
+                else:
+                    seg_parts.append(f'segment type-b srv6 {sid}')
+        cmd_parts.append(' '.join(seg_parts))
+
+    if 'policy-name' in sr_policy:
+        cmd_parts.append(f'policy-name "{sr_policy["policy-name"]}"')
+
+    if 'candidate-path-name' in sr_policy:
+        cmd_parts.append(f'candidate-path-name "{sr_policy["candidate-path-name"]}"')
+
+    return ' '.join(cmd_parts)
+
+
 def decode_to_api_command(payload_hex: str, neighbor: 'Neighbor', generic: bool = False) -> list[str]:
     """Decode BGP UPDATE hex to API command string(s).
 
@@ -510,6 +570,16 @@ def decode_to_api_command(payload_hex: str, neighbor: 'Neighbor', generic: bool 
                             cmd = format_mvpn_announce(afi, nexthop, nlri_info, attributes)
                             if cmd:
                                 commands.append(cmd)
+                continue
+
+            # Handle SR Policy
+            if 'sr-policy' in family:
+                afi = 'ipv4' if 'ipv4' in family else 'ipv6'
+                for nexthop, nlris in nexthops.items():
+                    for nlri_info in nlris:
+                        cmd = format_sr_policy_announce(afi, nexthop, nlri_info, attributes)
+                        if cmd:
+                            commands.append(cmd)
                 continue
 
             # Handle MUP

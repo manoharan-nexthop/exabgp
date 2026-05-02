@@ -35,6 +35,7 @@ class ParseFamily(Section):
             'flow': (AFI.ipv4, SAFI.flow_ip),
             'flow-vpn': (AFI.ipv4, SAFI.flow_vpn),
             'mup': (AFI.ipv4, SAFI.mup),
+            'sr-policy': (AFI.ipv4, SAFI.sr_policy),
         },
         'ipv6': {
             'unicast': (AFI.ipv6, SAFI.unicast),
@@ -43,6 +44,7 @@ class ParseFamily(Section):
             'mpls-vpn': (AFI.ipv6, SAFI.mpls_vpn),
             'mcast-vpn': (AFI.ipv6, SAFI.mcast_vpn),
             'mup': (AFI.ipv6, SAFI.mup),
+            'sr-policy': (AFI.ipv6, SAFI.sr_policy),
             'flow': (AFI.ipv6, SAFI.flow_ip),
             'flow-vpn': (AFI.ipv6, SAFI.flow_vpn),
         },
@@ -74,6 +76,7 @@ class ParseFamily(Section):
                     'flow',
                     'flow-vpn',
                     'mup',
+                    'sr-policy',
                 ],
                 conversion_map=convert,
                 afi_context='ipv4',
@@ -85,7 +88,17 @@ class ParseFamily(Section):
             'ipv6': TupleLeaf(
                 type=ValueType.ENUMERATION,
                 description='IPv6 address family',
-                choices=['unicast', 'nlri-mpls', 'labeled-unicast', 'mpls-vpn', 'mcast-vpn', 'mup', 'flow', 'flow-vpn'],
+                choices=[
+                    'unicast',
+                    'nlri-mpls',
+                    'labeled-unicast',
+                    'mpls-vpn',
+                    'mcast-vpn',
+                    'mup',
+                    'sr-policy',
+                    'flow',
+                    'flow-vpn',
+                ],
                 conversion_map=convert,
                 afi_context='ipv6',
                 track_duplicates=True,
@@ -134,6 +147,7 @@ class ParseFamily(Section):
         '   ipv4 mpls-vpn;\n'
         '   ipv4 mcast-vpn;\n'
         '   ipv4 mup;\n'
+        '   ipv4 sr-policy;\n'
         '   ipv4 flow;\n'
         '   ipv4 flow-vpn;\n'
         '   ipv6 unicast;\n'
@@ -141,6 +155,7 @@ class ParseFamily(Section):
         '   ipv6 mpls-vpn;\n'
         '   ipv6 mcast-vpn;\n'
         '   ipv6 mup;\n'
+        '   ipv6 sr-policy;\n'
         '   ipv6 flow;\n'
         '   ipv6 flow-vpn;\n'
         '   l2vpn vpls;\n'
