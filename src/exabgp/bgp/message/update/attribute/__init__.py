@@ -89,13 +89,9 @@ from exabgp.bgp.message.update.attribute.sr.prefixsid import PrefixSid
 __all__ = [
     'Attribute',
     'Attributes',
-    'AttributeCollection',
-    'AttributeSet',
-    'AttributesWire',
     'GenericAttribute',
     'Origin',
     'ASPath',
-    'AS2Path',
     'AS4Path',
     'SET',
     'SEQUENCE',

@@ -31,7 +31,8 @@ if TYPE_CHECKING:
 from exabgp.bgp.message.notification import Notify
 from exabgp.bgp.message.update.attribute.attribute import Attribute
 from exabgp.bgp.message.update.attribute.tunnel_encap.tlv import TunnelTypeTLV
-from exabgp.util.types import Buffer
+# Type alias for buffer (bytes or bytearray)
+Buffer = bytes | bytearray
 
 # Import SR Policy to trigger registration of tunnel type 15
 import exabgp.bgp.message.update.attribute.tunnel_encap.sr_policy  # noqa: F401

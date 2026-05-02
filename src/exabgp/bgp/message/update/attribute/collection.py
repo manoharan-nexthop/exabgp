@@ -25,7 +25,8 @@ from struct import unpack
 from collections.abc import Callable, Iterator, MutableMapping
 from typing import TYPE_CHECKING, Any, ClassVar, Generator, cast
 
-from exabgp.util.types import Buffer
+# Type alias for buffer (bytes or bytearray)
+Buffer = bytes | bytearray
 
 if TYPE_CHECKING:
     from exabgp.bgp.message.open.capability.negotiated import Negotiated

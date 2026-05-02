@@ -53,8 +53,6 @@ from exabgp.bgp.message.update.nlri.bgpls import BGPLS
 from exabgp.bgp.message.update.nlri.mup import MUP
 from exabgp.bgp.message.update.nlri.mvpn import MVPN
 from exabgp.bgp.message.update.nlri.sr_policy import SRPolicyNLRI
-from exabgp.bgp.message.update.nlri.empty import Empty
-from exabgp.bgp.message.update.nlri.collection import NLRICollection, MPNLRICollection
 
 __all__ = [
     'NLRI',
@@ -70,7 +68,4 @@ __all__ = [
     'MUP',
     'MVPN',
     'SRPolicyNLRI',
-    'Empty',
-    'NLRICollection',
-    'MPNLRICollection',
 ]

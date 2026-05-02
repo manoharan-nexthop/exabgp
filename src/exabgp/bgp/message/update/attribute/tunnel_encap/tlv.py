@@ -28,7 +28,8 @@ from typing import Any, ClassVar, Type
 
 from exabgp.bgp.message.notification import Notify
 from exabgp.util import hexstring
-from exabgp.util.types import Buffer
+# Type alias for buffer (bytes or bytearray)
+Buffer = bytes | bytearray
 
 # Sub-TLV header: type(1) + length(2) = 3 bytes
 _SUBTLV_HEADER_SIZE = 3

@@ -11,29 +11,28 @@ Created by Manoharan Sundaramoorthy 2026-05-01.
 
 from __future__ import annotations
 
-from exabgp.bgp.message.update.attribute import AttributeCollection
+from exabgp.bgp.message.update.attribute import Attributes
 from exabgp.protocol.family import AFI, SAFI
-from exabgp.rib.route import Route
+from exabgp.rib.change import Change
 
 from exabgp.configuration.announce import ParseAnnounce
-from exabgp.configuration.core import Tokeniser
-from exabgp.configuration.schema import ActionKey, ActionOperation, ActionTarget
 from exabgp.configuration.static.sr_policy import sr_policy_route
 
 
-def _build_sr_policy_route(tokeniser: Tokeniser, afi: AFI) -> list[Route]:
+def _build_sr_policy_route(tokeniser, afi: AFI) -> list[Change]:
     nlri, nexthop, tunnel_encap = sr_policy_route(tokeniser, afi)
-    attributes = AttributeCollection()
+    nlri.nexthop = nexthop
+    attributes = Attributes()
     if tunnel_encap is not None:
         attributes.add(tunnel_encap)
-    return [Route(nlri, attributes, nexthop=nexthop)]
+    return [Change(nlri, attributes)]
 
 
-@ParseAnnounce.register_family(AFI.ipv4, SAFI.sr_policy, ActionTarget.SCOPE, ActionOperation.EXTEND, ActionKey.NAME)
-def sr_policy_ipv4(tokeniser: Tokeniser) -> list[Route]:
+@ParseAnnounce.register('sr-policy', 'extend-name', 'ipv4')
+def sr_policy_ipv4(tokeniser):
     return _build_sr_policy_route(tokeniser, AFI.ipv4)
 
 
-@ParseAnnounce.register_family(AFI.ipv6, SAFI.sr_policy, ActionTarget.SCOPE, ActionOperation.EXTEND, ActionKey.NAME)
-def sr_policy_ipv6(tokeniser: Tokeniser) -> list[Route]:
+@ParseAnnounce.register('sr-policy', 'extend-name', 'ipv6')
+def sr_policy_ipv6(tokeniser):
     return _build_sr_policy_route(tokeniser, AFI.ipv6)

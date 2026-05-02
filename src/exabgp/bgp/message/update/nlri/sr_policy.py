@@ -36,7 +36,9 @@ from exabgp.bgp.message import Action
 from exabgp.bgp.message.notification import Notify
 from exabgp.bgp.message.update.nlri import NLRI
 from exabgp.protocol.family import AFI, SAFI, Family
-from exabgp.util.types import Buffer
+
+# Type alias for buffer (bytes or bytearray)
+Buffer = bytes | bytearray
 
 # IPv4 NLRI body: distinguisher(4) + color(4) + endpoint(4) = 12
 _IPV4_NLRI_SIZE = 12

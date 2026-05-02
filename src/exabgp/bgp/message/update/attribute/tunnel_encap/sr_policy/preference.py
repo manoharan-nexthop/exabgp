@@ -17,7 +17,8 @@ from struct import pack, unpack
 from typing import ClassVar
 
 from exabgp.bgp.message.update.attribute.tunnel_encap.tlv import SubTLV
-from exabgp.util.types import Buffer
+# Type alias for buffer (bytes or bytearray)
+Buffer = bytes | bytearray
 
 _PREFERENCE_VALUE_SIZE = 8  # flags(4) + preference(4)
 

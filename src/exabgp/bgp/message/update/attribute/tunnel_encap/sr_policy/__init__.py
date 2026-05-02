@@ -27,7 +27,8 @@ from exabgp.bgp.message.update.attribute.tunnel_encap.sr_policy.candidate_path_n
 from exabgp.bgp.message.update.attribute.tunnel_encap.sr_policy.binding_sid import BindingSIDSubTLV
 from exabgp.bgp.message.update.attribute.tunnel_encap.sr_policy.srv6_binding_sid import SRv6BindingSIDSubTLV
 from exabgp.bgp.message.update.attribute.tunnel_encap.sr_policy.segment_list import SegmentListSubTLV
-from exabgp.util.types import Buffer
+# Type alias for buffer (bytes or bytearray)
+Buffer = bytes | bytearray
 
 _SR_POLICY_TUNNEL_TYPE = 15
 

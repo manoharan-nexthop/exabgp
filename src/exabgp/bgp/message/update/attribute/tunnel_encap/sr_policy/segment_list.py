@@ -64,7 +64,8 @@ from typing import ClassVar
 
 from exabgp.bgp.message.notification import Notify
 from exabgp.bgp.message.update.attribute.tunnel_encap.tlv import SubTLV
-from exabgp.util.types import Buffer
+# Type alias for buffer (bytes or bytearray)
+Buffer = bytes | bytearray
 
 _SUBTLV_HEADER = 3  # type(1) + length(2)
 
